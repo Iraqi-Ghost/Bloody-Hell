@@ -70,6 +70,9 @@ import os, requests, json, sys
 from time import sleep
 from huepy import *
 import cryptography
+import pyfiglet
+import socket
+from datetime import datetime
 
 
 def slowprint(s):
@@ -139,27 +142,9 @@ print("""
 
 tool = input("[+]Enter by Number ==>\n\n\n\n[1]Network SPY\n[2]OSINT\n[3]Encryption\n[4]Malware\n[99]Contact me\n\n\n\n[+] ==> ")
 
-num = '1','2','3','4','99'
-
-if tool != num:
-        print("Sorry, Enter a Vaild Option")
-        exit()
-
-
-
-#'''
-#while True:
-#    if tool != num:
-#        try:
-#            print("Sorry, Enter an vaild option")
-#        except:
-#            pass
-#    else:
-#        exit
-#'''
 
 if tool == "1":
-    spy = input("Enter by Numbers ==>\n\n[1]Network Sniffer\n[2]Local Host\n==> ")
+    spy = input("Enter by Numbers ==>\n\n[1]Network Sniffer\n[2]Local Host\n[3]Port Scanner\n==> ")
     if spy == "1":
         # -*- coding: utf-8 -*-
 
@@ -215,6 +200,38 @@ if tool == "1":
                 print("Unable to get Hostname and IP")
             # Driver code
         host_IP() #Function call
+
+    if spy == "3":
+        ascii_banner = pyfiglet.figlet_format("PORT SCANNER")
+        print(ascii_banner)
+
+        target = input(str("Enter the Target IP ==> "))
+
+        #Banner
+        print("_" * 50)
+        print("Scanning Target ==> " + target)
+        print("Scanning started at ==> " + str(datetime.now()))
+        print("_" * 50)
+
+        try:
+
+            #scan every port
+            for port in range(1,65535):
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                socket.setdefaulttimeout(0.5)
+
+                # return open ports
+                results = s.connect_ex((target,port))
+                if results == 0:
+                    print("[*] Port {} is open".format(port))
+                s.close()
+        except KeyboardInterrupt:
+            print("\n Exiting :(")
+            sys.exit()
+        
+        except socket.error:
+            print("\ Host not responding ;(")
+            sys.exit()
 
 
 
