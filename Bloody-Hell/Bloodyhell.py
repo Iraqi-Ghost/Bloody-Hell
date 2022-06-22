@@ -1,7 +1,8 @@
+from lib2to3.pygram import Symbols
 import sys
 import time
 import os
-import datetime
+import time
 
 def slowprint(s):
     for c in s + '\n':
@@ -12,6 +13,9 @@ slowprint("")
 time.sleep(0)
 os.system('cls')
 
+
+from platform import system
+from traceback import print_exc
 from scapy.arch.windows import get_windows_if_list
 from scapy.all import *
 import requests, os
@@ -256,8 +260,7 @@ if tool == "1":
         except socket.error:
             print(" Host not responding ;(")
             sys.exit()
-
-
+    
 
 if tool == "2":
     def slowprint(s):
@@ -323,9 +326,9 @@ if tool == "2":
             sleep(0.6)
             print("    Country              " + (" :      " + (data['country'] + "\n")))
             sleep(0.6)
-            print("    Lat           " + (" :      " + (data['lat'])))
+            print("    Latitude           " + (" :      " + (data['lat'])))
             sleep(0.6)
-            print("    Lon          " + (" :      " + (data['lon'])))
+            print("    Longitude          " + (" :      " + (data['lng'])))
             sleep(0.6)
             print("    TimeZone      " + (" :      " + (data['timezone'])))
             sleep(0.6)
@@ -434,29 +437,21 @@ if tool == "3":
 
 
     if encrypt == "2":
-        ## characters to generate password from
-        characters = list(string.ascii_letters + string.digits + "!@$")
+        print("Welcome :)")
 
-        def generate_random_password():
-            ## length of password from the user
-            length = int(input("[+]Enter password length: "))
+        length = int(input("\nEnter the length of the Password -> "))
 
-            ## shuffling the characters
-            random.shuffle(characters)
-            
-            ## picking random characters from the list
-            password = []
-            for i in range(length):
-                password.append(random.choice(characters))
+        lower = string.ascii_lowercase
+        upper = string.ascii_uppercase
+        num = string.digits
+        symbols = string.punctuation
 
-            ## shuffling the resultant password
-            random.shuffle(password)
+        all = lower + upper + num + symbols
 
-            ## converting the list to string
-            ## printing the list
-            print("".join(password))
-            
-            generate_random_password()
+        temp = random.sample(all,length)
+
+        password = "".join(temp)
+        print(password)
 
 
 
