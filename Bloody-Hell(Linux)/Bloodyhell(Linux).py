@@ -455,30 +455,46 @@ if tool == "3":
 
 
     if encrypt == "2":
-        ## characters to generate password from
-        characters = list(string.ascii_letters + string.digits + "!@$")
-
-        def generate_random_password():
-            ## length of password from the user
-            length = int(input("[+]Enter password length: "))
-
-            ## shuffling the characters
-            random.shuffle(characters)
+        def encrypt(text):
             
-            ## picking random characters from the list
-            password = []
-            for i in range(length):
-                password.append(random.choice(characters))
-
-            ## shuffling the resultant password
-            random.shuffle(password)
-
-            ## converting the list to string
-            ## printing the list
-            print("".join(password))
+            key = Fernet.generate_key()
             
-            generate_random_password()
+            print("Your Key is:",key.decode('ascii'))
+        
+            b = bytes(text, 'utf-8')
+            
+            f = Fernet(key)
+            
+            print()
+            
+            token=f.encrypt(b)
 
+            print("Your encrypted text is: -> ",token.decode('ascii'))
+        
+        def decrypt(key,text):
+            k=bytes(key, 'utf-8')
+            b = bytes(text, 'utf-8')
+            f=Fernet(k)
+            
+            dec=f.decrypt(b)
+
+            print("Your decrypted text is:",dec.decode('ascii'))
+            
+            
+        print("Enter text you want to encrypt or decrypt:")
+        text = (input())
+        print()
+        print("For Encryption Press 1 || For Decryption Press 2 ==> ")
+        press=int(input())
+
+
+        if(press==1):
+            encrypt(text)
+        else:
+            print("Enter Key:")
+            keyy=input()
+            print()
+            decrypt(keyy,text)
 
 
 if tool == "4":
